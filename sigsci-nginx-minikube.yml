@@ -1,0 +1,48 @@
+# APP DEPLOYMENT
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: sigsci-nginx-minikube
+  name: sigsci-nginx-minikube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: sigsci-nginx-minikube-exposed
+  template:
+    metadata:
+      labels:
+        run: sigsci-nginx-minikube-exposed
+    spec:
+      containers:
+      - image: localhost:5000/sigsci-nginx-minikube:0.1.0
+        name: sigsci-nginx-minikube
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "75m"
+
+---
+
+# APP SERVICE
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: sigsci-nginx-minikube
+  name: sigsci-nginx-minikube
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: sigsci-nginx-minikube-exposed
+  type: NodePort
+  
