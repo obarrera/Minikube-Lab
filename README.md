@@ -1,6 +1,6 @@
 # Minikube-Lab
 
-A minikube labb based off of the lab-in-the-box project.
+A minikube lab based off of the lab-in-the-box project.
 
 ## Getting Started
 
